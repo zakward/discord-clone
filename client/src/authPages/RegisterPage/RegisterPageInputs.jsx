@@ -23,7 +23,7 @@ function RegisterPageInputs(props) {
         value={password}
         setValue={setPassword}
         label="Password"
-        type="text"
+        type="password"
         placeholder="Enter password"
       />
     </>

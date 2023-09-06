@@ -4,7 +4,11 @@ import LoginPageHeader from "./LoginPageHeader";
 import LoginPageInputs from "./LoginPageInputs";
 import LoginPageFooter from "./LoginPageFooter";
 import { validateLoginForm } from "../../shared/utils/validators";
-function LoginPage() {
+import { connect } from "react-redux";
+import { getActions } from "../../store/actions/authActions";
+import { useNavigate } from "react-router-dom";
+function LoginPage({ login }) {
+  const history = useNavigate();
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
@@ -14,9 +18,11 @@ function LoginPage() {
   }, [mail, password, setIsFormValid]);
 
   function handleLogin() {
-    console.log(mail);
-    console.log(password);
-    console.log("log in");
+    const userDetails = {
+      mail,
+      password,
+    };
+    login(userDetails, history);
   }
 
   return (
@@ -33,4 +39,10 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+const mapActionsToProps = (dispatch) => {
+  return {
+    ...getActions(dispatch),
+  };
+};
+
+export default connect(null, mapActionsToProps)(LoginPage);
